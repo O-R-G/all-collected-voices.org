@@ -53,11 +53,17 @@ if($uu->id)
 		<title><? echo $title; ?></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" href="/static/css/global.css">
-		<link rel="stylesheet" href="/static/css/sf-text.css">
+		<link rel="stylesheet" href="/static/css/main.css">
+		<link rel="stylesheet" href="/static/css/krungthep.css">
 		<link rel="apple-touch-icon" href="/media/png/touchicon.png" />
 	</head>
 	<body>
+        <audio controls autoplay>
+            <source src="media/mp3/all-collected-voices_v0.mp3" type="audio/mpeg">
+            <source src="media/mp3/all-collected-voices_v0.ogg" type="audio/ogg">
+            Sorry, but your browser does not support audio.
+        </audio>
+
 		<div id="page"><?
 			if(!$uu->id)
 			{

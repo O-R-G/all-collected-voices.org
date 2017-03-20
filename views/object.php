@@ -33,7 +33,7 @@ else
 			<li><?
 				if(!$uu->id)
 				{
-				?>All Collected: Voices * <?
+				?>All: Collected-Voices<?
 				}
 				else
 				{
