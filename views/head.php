@@ -61,9 +61,9 @@ $credit = "An audio archive produced by <a href='http://www.goethe.de/aproposdoc
 		<link rel="apple-touch-icon" href="/media/png/touchicon.png" />
 	</head>
 	<body>
-        <audio autoplay>
-            <source src="media/mp3/all-collected-voices_v0.mp3" type="audio/mpeg">
-            <source src="media/mp3/all-collected-voices_v0.ogg" type="audio/ogg">
+        <audio autoplay controls>
+            <source src="media/mp3/all-collected-voices_v1.mp3" type="audio/mpeg">
+            <source src="media/ogg/all-collected-voices_v1.ogg" type="audio/ogg">
             Sorry, but your browser does not support audio.
         </audio>
 		<div id="page"><?
