@@ -70,14 +70,13 @@ ul:first-child {
 	padding-left: 0px;
 }
 
+.logo {
+    width: 20%;
+}
+
 #clock-canvas,
 #skull {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-.logo {
-    margin-left: 5%;
-    width: 33%;
 }
 
 #skull-container {
