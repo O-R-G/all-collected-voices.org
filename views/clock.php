@@ -11,12 +11,16 @@ if($settings_id)
 	}
 	else
 	{
-		$img = "/media/png/a.png";
-		$img_alt = "/media/png/a.png";
+		$img = "/media/svg/yorick.svg";
+		$img_alt = "/media/svg/yorick-ex.svg";
 	}
 }
-else
-	$img = "/media/png/a.png";
+else {
+	// $img = "/media/svg/play.svg";
+	// $img_alt = "/media/svg/a.svg";
+	$img = "/media/svg/blank.svg";
+	$img_alt = "/media/svg/blank.svg";
+}
 ?><script type="text/javascript" src="<? echo $host; ?>static/js/global.js"></script>
 <script type="text/javascript" src="<? echo $host; ?>static/js/clock.js"></script><?
 if(!$uu->id)

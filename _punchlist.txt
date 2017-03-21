@@ -1,0 +1,20 @@
+- wave visualizer
+- audio track 
+- description
+- goethe logo
+- radio logo
+- images
+
+- www.goethe.de/aproposdocumenta 
+- www.radioathenes.org
+- announcements of upcoming events and sessions
+that will have a heading/title, dates and possibly (not always) an
+accompanying text or description. The actual recordings will eventually
+replace the announcements.
+- other audio files
+- photographs
+- re:announcements: some events/conversations will be announced in advance,
+some will be spontaneous, for example we might say: TODAY!
+- Perhaps in terms of how they appear, the most recent should be on top?
+
+

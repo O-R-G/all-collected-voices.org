@@ -28,7 +28,7 @@ p {
 }
 
 img {
-	/* width: 100%; */
+	width: 100%;
 }
 
 #fullscreen {
@@ -38,7 +38,7 @@ img {
 
 a:link,
 a:visited {
-    color: #ff0000;
+    color: #999999;
     text-decoration: none;
 }
 
@@ -61,8 +61,9 @@ header.homepage {
 
 ul {
 	list-style-type: none;
-	padding-left: 20px;
+	padding-left: 0px;
 	margin: 0px;
+    text-align: center;
 }
 
 ul:first-child {
@@ -79,7 +80,6 @@ ul:first-child {
 	position: fixed;
 	right: 0px;
 	width: 100%;
-	padding: 100px;
 /* 
 	height: 100%;
 	width: 100%;

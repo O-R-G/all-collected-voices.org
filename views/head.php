@@ -47,6 +47,9 @@ if($uu->id)
 		$show_menu = true;
 }
 
+$credit = "An audio archive produced by <a href='http://www.goethe.de/aproposdocumenta'>Goethe-Institut, Athen</a> w/ <a href='http://www.radioathenes.org'>Radio Athènes</a>.";
+
+
 ?><!DOCTYPE html>
 <html>
 	<head>
@@ -58,12 +61,11 @@ if($uu->id)
 		<link rel="apple-touch-icon" href="/media/png/touchicon.png" />
 	</head>
 	<body>
-        <audio controls autoplay>
+        <audio autoplay>
             <source src="media/mp3/all-collected-voices_v0.mp3" type="audio/mpeg">
             <source src="media/mp3/all-collected-voices_v0.ogg" type="audio/ogg">
             Sorry, but your browser does not support audio.
         </audio>
-
 		<div id="page"><?
 			if(!$uu->id)
 			{
@@ -81,9 +83,9 @@ if($uu->id)
 					<li><?
 						if($uu->id)
 						{
-							?><a href="<? echo $host; ?>">www.radioathens.org & www.goethe.de/</a><?
+							?><a href="<? echo $host; ?>"><? echo $credit; ?></a><?
 						}
-						else { ?>www.radioathens.org & www.goethe.de<? }
+						else { echo $credit; }
 					?></li>
 					<ul class="nav-level"><?
 				$prevd = $nav[0]['depth'];

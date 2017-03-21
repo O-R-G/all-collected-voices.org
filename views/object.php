@@ -33,11 +33,11 @@ else
 			<li><?
 				if(!$uu->id)
 				{
-				?>All: Collected-Voices<?
+				?>ALL: COLLECTED-VOICES*<?
 				}
 				else
 				{
-				?><a href="<? echo $host.$a_url; ?>">from Radio Athenes and the Goethe Institute</a><?
+				?><a href="<? echo $host.$a_url; ?>">An audio archive</a><?
 				}
 			?></li>
 			<ul class="nav-level">
