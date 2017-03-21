@@ -76,8 +76,8 @@ ul:first-child {
 }
 
 .logo {
-    margin: auto;
     width: 40%;
+    text-align: center;
 }
 
 #skull-container {
