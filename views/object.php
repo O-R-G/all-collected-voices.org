@@ -28,16 +28,14 @@ else
 {
 ?><section id="body" class="visible"><?
 }
-	?>
-    <!--
-    <div id="breadcrumbs">
+	?><div id="breadcrumbs">
 		<ul class="nav-level">
 			<li><?
 				if(!$uu->id)
 				{
 				?>ALL: COLLECTED-VOICES*<?
 				}
-				else
+				// else
 				{
 				?><a href="<? echo $host.$a_url; ?>">ALL: COLLECTED-VOICES*</a><?
 				}
@@ -46,9 +44,7 @@ else
 				<span><? echo $name; ?></span>
 			</ul>
 		</ul>
-	</div>
-    -->
-    <?
+	</div><?
 for($i = 0; $i < count($b_arr); $i++)
 {
 	if($i % 2 == 0)
