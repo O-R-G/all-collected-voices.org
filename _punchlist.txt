@@ -1,9 +1,11 @@
+- autoplay audio ios
 + fonts
 + audio
-- logos
++ logos
 + description
 + www.goethe.de/aproposdocumenta 
 + www.radioathenes.org
+- fix breadcrumbs
 
 - announcements of upcoming events and sessions
 that will have a heading/title, dates and possibly (not always) an
