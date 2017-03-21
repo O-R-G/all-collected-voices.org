@@ -1,5 +1,9 @@
-- wave visualizer
+- fix audio
 - audio track 
+- add logos
+- fonts
+
+- wave visualizer
 - description
 - goethe logo
 - radio logo
