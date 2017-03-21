@@ -37,7 +37,7 @@ else
 				}
 				else
 				{
-				?><a href="<? echo $host.$a_url; ?>">ALL: -*</a><?
+				?><a href="<? echo $host.$a_url; ?>">ALL: COLLECTED-VOICES*</a><?
 				}
 			?></li>
 			<ul class="nav-level">
