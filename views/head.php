@@ -47,7 +47,7 @@ if($uu->id)
 		$show_menu = true;
 }
 
-$credit = "An audio archive produced by <a href='http://www.goethe.de/aproposdocumenta'>Goethe-Institut, Athen</a> w/ <a href='http://www.radioathenes.org'>Radio Athènes</a>.";
+$credit = "An <a href='an-audio-archive'>audio archive</a> produced by <a href='http://www.goethe.de/aproposdocumenta'>Goethe-Institut, Athen</a> w/ <a href='http://www.radioathenes.org'>Radio Athènes</a>";
 
 
 ?><!DOCTYPE html>
@@ -61,7 +61,7 @@ $credit = "An audio archive produced by <a href='http://www.goethe.de/aproposdoc
 		<link rel="apple-touch-icon" href="/media/png/touchicon.png" />
 	</head>
 	<body>
-        <audio autoplay controls>
+        <audio autoplay>
             <source src="media/mp3/all-collected-voices_v1.mp3" type="audio/mpeg">
             <source src="media/ogg/all-collected-voices_v1.ogg" type="audio/ogg">
             Sorry, but your browser does not support audio.
