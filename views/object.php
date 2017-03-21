@@ -41,7 +41,7 @@ else
 				}
 			?></li>
 			<ul class="nav-level">
-				<span><? echo $name; ?></span>
+				<span><? // echo $name; ?></span>
 			</ul>
 		</ul>
 	</div><?
