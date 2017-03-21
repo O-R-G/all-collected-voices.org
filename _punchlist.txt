@@ -1,7 +1,7 @@
 + fonts
 + audio
 - logos
-/ description
++ description
 + www.goethe.de/aproposdocumenta 
 + www.radioathenes.org
 

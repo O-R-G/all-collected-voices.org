@@ -37,7 +37,7 @@ else
 				}
 				else
 				{
-				?><a href="<? echo $host.$a_url; ?>">An audio archive</a><?
+				?><a href="<? echo $host.$a_url; ?>">ALL: -*</a><?
 				}
 			?></li>
 			<ul class="nav-level">
