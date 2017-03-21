@@ -75,6 +75,9 @@ ul:first-child {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+.logo {
+    width: 50%;
+}
 
 #skull-container {
 	position: fixed;
