@@ -61,11 +61,15 @@ $credit = "An <a href='an-audio-archive'>audio archive</a> produced by <a href='
 		<link rel="apple-touch-icon" href="/media/png/touchicon.png" />
 	</head>
 	<body>
-        <audio autoplay>
+        <!--
+        <div id="controls">
+        <audio autoplay controls>
             <source src="media/mp3/all-collected-voices_v1.mp3" type="audio/mpeg">
             <source src="media/ogg/all-collected-voices_v1.ogg" type="audio/ogg">
             Sorry, but your browser does not support audio.
         </audio>
+        </div>
+        -->
 		<div id="page"><?
 			if(!$uu->id)
 			{

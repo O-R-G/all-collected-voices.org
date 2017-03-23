@@ -70,8 +70,22 @@ ul:first-child {
 	padding-left: 0px;
 }
 
+canvas {
+}
+
 .logo {
     width: 20%;
+}
+
+#controls {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#analyzer {
+    position: fixed;
+    bottom: 0;
 }
 
 #clock-canvas,
