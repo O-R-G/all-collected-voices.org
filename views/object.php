@@ -33,11 +33,11 @@ else
 			<li><?
 				if(!$uu->id)
 				{
-				?>ALL: COLLECTED-VOICES*<?
+				?>ALL: COLLECTED VOICES<?
 				}
 				else
 				{
-				?><a href="<? echo $host.$a_url; ?>">ALL: COLLECTED-VOICES*</a><?
+				?><a href="<? echo $host.$a_url; ?>">ALL: COLLECTED VOICES</a><?
 				}
 			?></li>
 			<ul class="nav-level">
