@@ -1,0 +1,6 @@
+# machine-specific config files
+.htaccess
+.htpasswd 
+
+# emacs backups
+*~
