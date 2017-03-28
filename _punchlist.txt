@@ -1,14 +1,13 @@
-- autoplay audio ios
++ autoplay audio ios
 + fonts
 + audio
 + logos
 + description
 + www.goethe.de/aproposdocumenta 
 + www.radioathenes.org
-- fix breadcrumbs
++ fix breadcrumbs
++ wave visualizer
 - "www dot all dash collected dash voices dot org"
-- wave visualizer
-
 
 - announcements of upcoming events and sessions that will have a 
 heading/title, dates and possibly (not always) an accompanying text or 
