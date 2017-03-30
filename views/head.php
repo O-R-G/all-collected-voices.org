@@ -47,7 +47,7 @@ if($uu->id)
 		$show_menu = true;
 }
 
-$credit = "An <a href='an-audio-archive'>audio archive</a> produced by <a href='http://www.goethe.de/aproposdocumenta' target='_new'>Goethe-Institut, Athen</a> w/ <a href='http://www.radioathenes.org' target='_new'>Radio Athènes</a>";
+$credit = "An <a href='an-audio-archive'>audio archive</a> produced by <a href='http://www.goethe.de/aproposdocumenta' target='_new'>Goethe-Institut Athen</a> w/ <a href='http://www.radioathenes.org' target='_new'>Radio Athènes</a>";
 
 
 ?><!DOCTYPE html>
