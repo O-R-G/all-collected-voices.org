@@ -5,7 +5,7 @@
 (function(){    
     var canvas, audio, ajax, source, analyser, sound, animation, w, h, context, button;
     var globalbuffer;
-    var url = 'media/mp3/all-collected-voices_v1.mp3';
+    var url = 'media/mp3/all-collected-voices.mp3';
     
     function init(){
         // canvas
