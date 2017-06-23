@@ -77,6 +77,17 @@ canvas {
     width: 20%;
 }
 
+.caption {
+    font-size: 12px;
+    line-height: 14px;
+    padding-top: 2px;    
+    padding-bottom: 2px;    
+}
+
+.mp3 {
+    padding-top: 10px;    
+}
+
 #controls {
     position: fixed;
     top: 0;

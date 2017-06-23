@@ -7,18 +7,20 @@ use \Michelf\Markdown;
 // 3. convert from markdown to html
 function process_body($b)
 {
-	$b_arr = explode("++", $b);
-	foreach($b_arr as &$b)
+	$body_parts = explode("++", $b);
+	foreach($body_parts as &$b)
 	{
 		$b = trim($b);
 		$b = Markdown::defaultTransform($b);
 	}
-	return $b_arr;
+	return $body_parts;
 }
 $oarr = $oo->get($uu->id);
 $body = $oarr["body"];
-$b_arr = process_body($body);
-$marr = $oo->media($uu->id);
+$body_parts = process_body($body);
+$media = $oo->media($uu->id);
+
+// header (menu or breadcrumbs)
 
 if($show_menu)
 {
@@ -28,7 +30,7 @@ else
 {
 ?><section id="body" class="visible"><?
 }
-	?><div id="breadcrumbs">
+?><div id="breadcrumbs">
 		<ul class="nav-level">
 			<li><?
 				if(!$uu->id)
@@ -45,22 +47,39 @@ else
 			</ul>
 		</ul>
 	</div><?
-for($i = 0; $i < count($b_arr); $i++)
+
+// body
+
+for($i = 0; $i < count($body_parts); $i++)
 {
 	if($i % 2 == 0)
 	{
 	?><div class="column-container-container"><?
 	}
-	?><div class="column-container"><? 
-		echo $b_arr[$i];
+	?><div class="column-container"><?                 
+		echo $body_parts[$i];
 		if($i == 0)
 		{
 			$j = 0;
-			foreach($marr as $m)
+			foreach($media as $m)
 			{
-		?><div><img src="<? echo m_url($m);?>" class="fullscreen"></div><?
-				$j++;
-			}
+                // if media type == mp3 then insert html audio player
+                if ($m[type] == 'mp3') {
+                    // this tag populates in funny way (looks empty in safari inspector)
+                    // check html audio tag ref ** fix **
+                    ?><audio controls class='mp3'>
+                        <source src="<? echo m_url($m); ?>" type="audio/mpeg">
+                         ** Sorry, your browser does not support the audio element. **
+                    </audio><?
+                } else {
+                    // otherwise, display img 
+                    ?><div><img src="<? echo m_url($m);?>" class="fullscreen"></div><?
+                }
+                // caption
+                if ($m[caption]) 
+                    ?><div class='caption'><? echo $m[caption]; ?></div><?   
+            } 
+		    $j++;
 		}
 	?></div><?
 	if($i % 2 == 1)
@@ -87,3 +106,4 @@ for($i = 0; $i < count($b_arr); $i++)
 		}, false);
 	}
 </script>
+
