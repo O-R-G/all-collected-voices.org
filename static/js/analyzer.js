@@ -5,6 +5,7 @@
 (function(){    
     var canvas, audio, ajax, source, analyser, sound, animation, w, h, context, button;
     var globalbuffer;
+    var isloaded, isplaying, startstop;
     var url = 'media/mp3/all-collected-voices.mp3';
     
     function init(){
@@ -26,9 +27,10 @@
         analyser.fftSize = FF; 
         source.connect(analyser);
         analyser.connect(audio.destination);
+        startstop = false;
 
         // document
-        document.addEventListener('click', start, false);
+        document.addEventListener('click', function () { requeststream(url); }, false);
 
         // load file
         requeststream(url);
@@ -64,11 +66,26 @@
     }
 
     function start(e){
+        // if not already playing, then start
+        // ** fix **
+        // need flag or some way to acct for asynchronous functions
+        // maybe just flag which sets to opposite of last time called
         source.buffer = globalbuffer;
-        // source.noteOn(0);    // deprecated, use start();
-        source.start(0);
-        window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
-        animation = requestAnimationFrame(animate);
+
+        startstop = !startstop;
+        // alert(startstop);
+        
+        // if (!startstop) {
+        if (isloaded && isplaying) {
+            // alert("loaded and playing");
+            source.stop(0);
+            requeststream(url);
+        } else {
+            source.start(0);
+            isplaying = true;
+            window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
+            animation = requestAnimationFrame(animate);
+        }
     }
 
     // new
@@ -84,10 +101,14 @@
                 function(buffer) {
                     globalbuffer = buffer;
                     console.log(globalbuffer);
+                    isloaded = true;
+                    isplaying = false;
                     start();        // does this need the event passed to it?
                                     // this will only work on desktop
                                     // *fix* try catch fail ios
                 }, function(){
+                    isloaded = false;
+                    isplaying = false;
                     console.log('Decoding error . . .')
                 });
         }
