@@ -38,7 +38,6 @@
         // document.addEventListener('click', start, false);
         // document.addEventListener('ontouchstart', start, false);
         document.addEventListener('click', function () { alert('click'); }, false);
-        document.addEventListener('ontouchstart', function () { alert('click'); }, false);
 
         // load file
         requeststream(url);
