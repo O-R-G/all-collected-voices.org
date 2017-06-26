@@ -2,10 +2,10 @@
 // requires <div id = 'anayzer'> as a container
 // *todo* pass url as a parameter to init()
 
-(function(){    
+// (function(){    
     var canvas, audio, ajax, source, analyser, sound, animation, w, h, context, button;
     var globalbuffer;
-    var isloaded, isplaying, startstop;
+    var loaded, started, paused;
     var url = 'media/mp3/all-collected-voices.mp3';
     
     function init(){
@@ -27,7 +27,11 @@
         analyser.fftSize = FF; 
         source.connect(analyser);
         analyser.connect(audio.destination);
-        startstop = false;
+
+        // status
+        audio.onstatechange = function() {
+            console.log("audio state change : " + audio.state);
+        }
 
         // document
         document.addEventListener('click', function () { requeststream(url); }, false);
@@ -66,29 +70,27 @@
     }
 
     function start(e){
-        // if not already playing, then start
-        // ** fix **
-        // need flag or some way to acct for asynchronous functions
-        // maybe just flag which sets to opposite of last time called
+        // start (desktop)
+        // click to start (ios)
+ 
         source.buffer = globalbuffer;
 
-        startstop = !startstop;
-        // alert(startstop);
-        
-        // if (!startstop) {
-        if (isloaded && isplaying) {
-            // alert("loaded and playing");
-            source.stop(0);
-            requeststream(url);
-        } else {
-            source.start(0);
-            isplaying = true;
+        if (audio.state == "running" && !started && !paused) {
+            // start audio from time 0, start animation
+            source.start(0);    
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
             animation = requestAnimationFrame(animate);
-        }
+            started = true;
+        } else if (audio.state == "suspended" && started && paused) {
+            // resume audio, resume animation
+            audio.resume();
+            paused = false;
+        } else if (audio.state == "running" && started && !paused) {
+            // suspend audio, suspend animation
+            audio.suspend();
+            paused = true;
+        }                
     }
-
-    // new
 
     function requeststream(thisurl){
         var request = new XMLHttpRequest();
@@ -101,14 +103,11 @@
                 function(buffer) {
                     globalbuffer = buffer;
                     console.log(globalbuffer);
-                    isloaded = true;
-                    isplaying = false;
+                    loaded = true;
                     start();        // does this need the event passed to it?
                                     // this will only work on desktop
-                                    // *fix* try catch fail ios
                 }, function(){
-                    isloaded = false;
-                    isplaying = false;
+                    loaded = false;
                     console.log('Decoding error . . .')
                 });
         }
@@ -121,4 +120,5 @@
     }
     
     window.addEventListener('load',init,false);
-})();
+
+//})();
