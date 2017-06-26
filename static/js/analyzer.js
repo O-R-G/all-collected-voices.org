@@ -7,7 +7,7 @@
     var globalbuffer;
     var loaded, started, paused;
     var url = 'media/mp3/all-collected-voices.mp3';
-    var debug = true;
+    var debug = false;
 
     function init(){
         // canvas
