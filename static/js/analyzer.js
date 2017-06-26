@@ -7,7 +7,7 @@
     var globalbuffer;
     var loaded, started, paused;
     var url = 'media/mp3/all-collected-voices.mp3';
-    var debug = false;
+    var debug = true;
 
     function init(){
         // canvas
@@ -35,17 +35,12 @@
         }
 
         // document
-        // document.addEventListener('click', start, false);
-        // document.addEventListener('ontouchstart', start, false);
-        document.addEventListener('click', function () { alert('click'); }, false);
+        document.addEventListener('click', start, false);
+        // document.addEventListener('click', function () { alert('click'); }, false);
 
         // load file
         requeststream(url);
         window.removeEventListener('load',init,false);
-    }
-
-    function click() {
-        alert('click');
     }
 
     function animate(){
@@ -81,21 +76,23 @@
         // click to start (ios)
         source.buffer = globalbuffer;
 
+        if (debug) alert("start called");
+
         if (audio.state == "running" && !started && !paused) {
             // start audio from time 0, start animation
-	    if (debug) alert("start");
+	        if (debug) alert("start");
             source.start(0);
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
             animation = requestAnimationFrame(animate);
             started = true;
         } else if (audio.state == "suspended" && started && paused) {
             // resume audio, resume animation
-	    if (debug) alert("resume");
+	        if (debug) alert("resume");
             audio.resume();
             paused = false;
         } else if (audio.state == "running" && started && !paused) {
             // suspend audio, suspend animation
-	    if (debug) alert("suspend");
+	        if (debug) alert("suspend");
             audio.suspend();
             paused = true;
         }                
