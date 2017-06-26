@@ -89,11 +89,14 @@
 	        if (debug) alert("resume");
             audio.resume();
             paused = false;
-        } else if (audio.state == "suspended" && !started && !paused) {
+        } else if (audio.state == "suspended") {
             // resume audio, start audio, resume animation
 	        if (debug) alert("resume");
             audio.resume();
             source.start(0);
+            window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
+            animation = requestAnimationFrame(animate);
+            started = true;
             paused = false;
         } else if (audio.state == "running" && started && !paused) {
             // suspend audio, suspend animation
