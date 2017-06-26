@@ -35,13 +35,18 @@
         }
 
         // document
-        // document.addEventListener('click', function () { requeststream(url); }, false);
-        document.addEventListener('click', start, false);
+        // document.addEventListener('click', start, false);
         // document.addEventListener('ontouchstart', start, false);
+        document.addEventListener('click', function () { alert('click'); }, false);
+        document.addEventListener('ontouchstart', function () { alert('click'); }, false);
 
         // load file
         requeststream(url);
         window.removeEventListener('load',init,false);
+    }
+
+    function click() {
+        alert('click');
     }
 
     function animate(){
