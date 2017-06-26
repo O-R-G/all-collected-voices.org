@@ -84,14 +84,16 @@
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
             animation = requestAnimationFrame(animate);
             started = true;
+            paused = false;
         } else if (audio.state == "suspended" && started && paused) {
             // resume audio, resume animation
 	        if (debug) alert("resume");
             audio.resume();
             paused = false;
         } else if (audio.state == "suspended") {
-            // resume audio, start audio, resume animation
-	        if (debug) alert("resume");
+            // * ios * resume, start audio, start animation
+            // no further boolean qualifiers b/c async calls make it erratic
+	        if (debug) alert("resume start");
             audio.resume();
             source.start(0);
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
