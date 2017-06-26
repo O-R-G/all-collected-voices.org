@@ -76,7 +76,7 @@
         // click to start (ios)
         source.buffer = globalbuffer;
 
-        if (debug) alert("start called");
+        if (debug) alert(audio.state);
 
         if (audio.state == "running" && !started && !paused) {
             // start audio from time 0, start animation
