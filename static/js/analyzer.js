@@ -7,7 +7,8 @@
     var globalbuffer;
     var loaded, started, paused;
     var url = 'media/mp3/all-collected-voices.mp3';
-    
+    var debug = false;
+
     function init(){
         // canvas
         var FF=2048/4;
@@ -36,6 +37,7 @@
         // document
         // document.addEventListener('click', function () { requeststream(url); }, false);
         document.addEventListener('click', start, false);
+        // document.addEventListener('ontouchstart', start, false);
 
         // load file
         requeststream(url);
@@ -73,21 +75,23 @@
     function start(e){
         // start (desktop)
         // click to start (ios)
- 
         source.buffer = globalbuffer;
 
         if (audio.state == "running" && !started && !paused) {
             // start audio from time 0, start animation
+	    if (debug) alert("start");
             source.start(0);
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
             animation = requestAnimationFrame(animate);
             started = true;
         } else if (audio.state == "suspended" && started && paused) {
             // resume audio, resume animation
+	    if (debug) alert("resume");
             audio.resume();
             paused = false;
         } else if (audio.state == "running" && started && !paused) {
             // suspend audio, suspend animation
+	    if (debug) alert("suspend");
             audio.suspend();
             paused = true;
         }                
