@@ -2,7 +2,7 @@
 // requires <div id = 'anayzer'> as a container
 // *todo* pass url as a parameter to init()
 
-// (function(){    
+(function(){    
     var canvas, audio, ajax, source, analyser, sound, animation, w, h, context, button;
     var globalbuffer;
     var loaded, started, paused;
@@ -122,4 +122,4 @@
     
     window.addEventListener('load',init,false);
 
-//})();
+})();
