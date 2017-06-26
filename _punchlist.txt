@@ -19,3 +19,7 @@ some will be spontaneous, for example we might say: TODAY!
 / perhaps in terms of how they appear, the most recent should be on top?
 + images
 x rm large files in repo
+- fix eventhandler for start() (stop) audio to stop if the audio element 
+    is clicked also
+  capture event scope issue
+- fix mobile audio

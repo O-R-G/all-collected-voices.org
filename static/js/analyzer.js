@@ -34,7 +34,8 @@
         }
 
         // document
-        document.addEventListener('click', function () { requeststream(url); }, false);
+        // document.addEventListener('click', function () { requeststream(url); }, false);
+        document.addEventListener('click', start, false);
 
         // load file
         requeststream(url);
@@ -77,7 +78,7 @@
 
         if (audio.state == "running" && !started && !paused) {
             // start audio from time 0, start animation
-            source.start(0);    
+            source.start(0);
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
             animation = requestAnimationFrame(animate);
             started = true;
