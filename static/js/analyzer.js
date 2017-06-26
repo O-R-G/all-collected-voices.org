@@ -75,8 +75,7 @@
         // start (desktop)
         // click to start (ios)
         source.buffer = globalbuffer;
-
-        if (debug) alert(audio.state);
+        if (debug) alert(audio.state + " " + started + " " + paused);
 
         if (audio.state == "running" && !started && !paused) {
             // start audio from time 0, start animation
@@ -89,6 +88,12 @@
             // resume audio, resume animation
 	        if (debug) alert("resume");
             audio.resume();
+            paused = false;
+        } else if (audio.state == "suspended" && !started && !paused) {
+            // resume audio, start audio, resume animation
+	        if (debug) alert("resume");
+            audio.resume();
+            source.start(0);
             paused = false;
         } else if (audio.state == "running" && started && !paused) {
             // suspend audio, suspend animation
