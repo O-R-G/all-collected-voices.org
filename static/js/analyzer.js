@@ -36,7 +36,6 @@
 
         // document
         document.addEventListener('click', start, false);
-        // document.addEventListener('click', function () { alert('click'); }, false);
 
         // load file
         requeststream(url);

@@ -24,3 +24,5 @@ x rm large files in repo
 + fix mobile audio
 + stop start audio logic
 / (general) localhost for mobile debug
+  https://stackoverflow.com/questions/6917107/how-can-i-redirect-http-requests-made-from-an-ipad/11757977#11757977
+  just set http proxy in manual with local machine ip
