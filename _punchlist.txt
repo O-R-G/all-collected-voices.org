@@ -16,11 +16,11 @@ x re:announcements: some events/conversations will be announced in advance,
 some will be spontaneous, for example we might say: TODAY!
 + other audio files
 + photographs
-/ perhaps in terms of how they appear, the most recent should be on top?
+x perhaps in terms of how they appear, the most recent should be on top?
 + images
 x rm large files in repo
 + mobile touchevent debug
 + fix eventhandler for start() (stop) audio to stop if the audio element 
 + fix mobile audio
 + stop start audio logic
-- localhost for mobile debug
+/ (general) localhost for mobile debug
