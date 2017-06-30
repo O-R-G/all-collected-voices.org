@@ -84,8 +84,11 @@ canvas {
     padding-bottom: 2px;    
 }
 
-.mp3 {
+.mp3-container {
 	margin-top: 10px;
+}
+
+.#mp3 {
 }
 
 #controls {

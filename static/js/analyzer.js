@@ -1,11 +1,12 @@
 // based on http://jsfiddle.net/pc76H/2/
-// requires <div id = 'anayzer'> as a container
+// requires <div id = 'analyzer'> as a container
 // *todo* pass url as a parameter to init()
 
 (function(){    
     var canvas, audio, ajax, source, analyser, sound, animation, w, h, context, button;
     var globalbuffer;
     var loaded, started, paused;
+    var mp3;
     var url = 'media/mp3/all-collected-voices.mp3';
     var debug = false;
 
@@ -36,6 +37,7 @@
 
         // document
         document.addEventListener('click', start, false);
+        mp3 = document.getElementById("mp3");
 
         // load file
         requeststream(url);
@@ -79,7 +81,7 @@
         if (audio.state == "running" && !started && !paused) {
             // start audio from time 0, start animation
 	        if (debug) alert("start");
-            source.start(0);
+            if (!mp3) source.start(0);
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
             animation = requestAnimationFrame(animate);
             started = true;
@@ -94,7 +96,7 @@
             // no further boolean qualifiers b/c async calls make it erratic
 	        if (debug) alert("resume start");
             audio.resume();
-            source.start(0);
+            if (!mp3) source.start(0);
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
             animation = requestAnimationFrame(animate);
             started = true;
@@ -119,8 +121,7 @@
                     globalbuffer = buffer;
                     console.log(globalbuffer);
                     loaded = true;
-                    start();        // does this need the event passed to it?
-                                    // this will only work on desktop
+                    start();        // only on desktop                                    
                 }, function(){
                     loaded = false;
                     console.log('Decoding error . . .')
