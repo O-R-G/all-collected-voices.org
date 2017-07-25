@@ -37,7 +37,12 @@
 
         // document
         document.addEventListener('click', start, false);
-        mp3 = document.getElementById("mp3");
+
+        // set audio src url
+        if (mp3 = document.getElementById("mp3")) {
+            url = mp3.src;
+            if (debug) console.log("====> " + url);
+        }
 
         // load file
         requeststream(url);
@@ -75,13 +80,12 @@
     function start(e){
         // start (desktop)
         // click to start (ios)
-        source.buffer = globalbuffer;
-        if (debug) alert(audio.state + " " + started + " " + paused);
+        if (!source.buffer) source.buffer = globalbuffer;
 
         if (audio.state == "running" && !started && !paused) {
             // start audio from time 0, start animation
 	        if (debug) alert("start");
-            if (!mp3) source.start(0);
+            source.start(0);
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
             animation = requestAnimationFrame(animate);
             started = true;
@@ -96,7 +100,7 @@
             // no further boolean qualifiers b/c async calls make it erratic
 	        if (debug) alert("resume start");
             audio.resume();
-            if (!mp3) source.start(0);
+            source.start(0);
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
             animation = requestAnimationFrame(animate);
             started = true;

@@ -23,6 +23,10 @@ x rm large files in repo
 + fix eventhandler for start() (stop) audio to stop if the audio element 
 + fix mobile audio
 + stop start audio logic
-/ (general) localhost for mobile debug
+x localhost for mobile debug
   https://stackoverflow.com/questions/6917107/how-can-i-redirect-http-requests-made-from-an-ipad/11757977#11757977
   just set http proxy in manual with local machine ip
++ stop analyzer if mp3 on the page
++ fix bug audio player / image z-index order
++ click analyzer logic on chrome
++ show current mp3 with analyser

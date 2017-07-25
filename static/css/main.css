@@ -100,6 +100,7 @@ canvas {
 #analyzer {
     position: fixed;
     bottom: 0;
+    z-index: -1;
 }
 
 #clock-canvas,
@@ -132,6 +133,7 @@ canvas {
 	vertical-align: top;
 	width: 33vw;
 	padding: 20px;
+    margin-bottom: 100px;
 }
 
 #breadcrumbs {
