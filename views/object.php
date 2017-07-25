@@ -67,9 +67,10 @@ for($i = 0; $i < count($body_parts); $i++)
                 if ($m[type] == 'mp3') {
                     // this tag populates in funny way (looks empty in safari inspector)
                     // check html audio tag ref ** fix **
-                    ?><audio controls id='mp3' class='mp3-container' src='<? echo m_url($m); ?>' type='audio/mpeg'>
+                    ?><audio id='mp3' class='mp3-container' src='<? echo m_url($m); ?>' type='audio/mpeg'>
                          ** Sorry, your browser does not support the audio element. **
-                    </audio><?
+                    </audio>
+                    <div class='caption'>(click anywhere to play/pause audio)</div><?
                 } else {
                     // otherwise, display img 
                     ?><div><img src="<? echo m_url($m);?>" class="fullscreen"></div><?
