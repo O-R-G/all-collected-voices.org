@@ -5,10 +5,10 @@
 (function(){    
     var canvas, audio, ajax, source, analyser, sound, animation, w, h, context, button;
     var globalbuffer;
-    var loaded, started, paused;
+    var loaded, started, playing;
     var mp3;
     var url = 'media/mp3/all-collected-voices.mp3';
-    var debug = true;
+    var debug = false;
 
     function init(){
         // canvas
@@ -83,35 +83,28 @@
         if (!source.buffer) source.buffer = globalbuffer;
         if (debug) console.log("audio.state = " + audio.state);
 
-        if (audio.state == "running" && !started && !paused) {
+        if (!started && !playing) {
+            // ios -- init
+            // osx -- init, start  
             // start audio from time 0, start animation
-	        if (debug) alert("start");
+	    // if (debug) alert("start");
             source.start(0);
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
             animation = requestAnimationFrame(animate);
             started = true;
-            paused = false;
-        } else if (audio.state == "suspended" && started && paused) {
-            // resume audio, resume animation
-	        if (debug) alert("resume");
+            if (audio.state == "running") playing = true;
+        } else if (started && !playing) {
+            // ios -- start
+	    if (debug) alert("resume start");
             audio.resume();
-            paused = false;
-        } else if (audio.state == "suspended") {
-            // * ios * resume, start audio, start animation
-            // no further boolean qualifiers b/c async calls make it erratic
-	        if (debug) alert("resume start");
-            audio.resume();
-            source.start(0);
-            window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
-            animation = requestAnimationFrame(animate);
-            started = true;
-            paused = false;
-        } else if (audio.state == "running" && started && !paused) {
-            // suspend audio, suspend animation
-	        if (debug) alert("suspend");
+            playing = true;
+        } else if (started && playing) {	    
+            // ios -- suspend
+            // osx -- suspend
+	    // if (debug) alert("suspend");
             audio.suspend();
-            paused = true;
-        }                
+            playing = false;
+        } 
     }
 
     function requeststream(thisurl){
