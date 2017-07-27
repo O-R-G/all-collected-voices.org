@@ -8,7 +8,7 @@
     var loaded, started, paused;
     var mp3;
     var url = 'media/mp3/all-collected-voices.mp3';
-    var debug = false;
+    var debug = true;
 
     function init(){
         // canvas
@@ -81,6 +81,7 @@
         // start (desktop)
         // click to start (ios)
         if (!source.buffer) source.buffer = globalbuffer;
+        if (debug) console.log("audio.state = " + audio.state);
 
         if (audio.state == "running" && !started && !paused) {
             // start audio from time 0, start animation
