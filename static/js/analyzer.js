@@ -87,23 +87,23 @@
             // ios -- init
             // osx -- init, start  
             // start audio from time 0, start animation
-	    // if (debug) alert("start");
             source.start(0);
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
             animation = requestAnimationFrame(animate);
             started = true;
             if (audio.state == "running") playing = true;
+	        if (debug) alert("start");
         } else if (started && !playing) {
             // ios -- start
-	    if (debug) alert("resume start");
             audio.resume();
             playing = true;
+	        if (debug) alert("resume start");
         } else if (started && playing) {	    
             // ios -- suspend
             // osx -- suspend
-	    // if (debug) alert("suspend");
             audio.suspend();
             playing = false;
+    	    if (debug) alert("suspend");
         } 
     }
 
