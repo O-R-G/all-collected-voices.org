@@ -109,8 +109,8 @@
 
     function requeststream(thisurl){
         var request = new XMLHttpRequest();
+        request.addEventListener("progress", updateprogress);
         request.addEventListener("load", requestfilelistener);
-        request.addEventListener("progress", updateProgress);
         request.open('GET', thisurl, true);     // async = true
         request.responseType = 'arraybuffer';
         // decode async
@@ -134,15 +134,16 @@
         console.log("status : " + this.statusText);
     }
 
-function updateProgress (oEvent) {
-  if (oEvent.lengthComputable) {
-    var percentComplete = oEvent.loaded / oEvent.total;
-    console.log("percentComplete = " + percentComplete);
-    console.log("oEvent.loaded = " + oEvent.loaded);
-  } else {
-    console.log("percentComplete = Unable to compute progress information since the total size is unknown");
-  }
-}
+    function updateprogress (e) {
+        if (e.lengthComputable) {
+            var percentcomplete = e.loaded / e.total;
+            console.log("percentcomplete = " + percentcomplete);
+            console.log("e.loaded = " + e.loaded)
+            context.fillRect(10,canvas.height*.64,canvas.width*percentcomplete,20);
+        } else {
+            console.log("Unable to compute progress information since the total size is unknown");
+        }
+    }
 
     
     window.addEventListener('load',init,false);
