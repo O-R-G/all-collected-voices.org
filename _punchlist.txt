@@ -23,10 +23,24 @@ x rm large files in repo
 + fix eventhandler for start() (stop) audio to stop if the audio element 
 + fix mobile audio
 + stop start audio logic
-x localhost for mobile debug
-  https://stackoverflow.com/questions/6917107/how-can-i-redirect-http-requests-made-from-an-ipad/11757977#11757977
-  just set http proxy in manual with local machine ip
 + stop analyzer if mp3 on the page
 + fix bug audio player / image z-index order
 + click analyzer logic on chrome
 + show current mp3 with analyser
+x localhost for mobile debug
+  https://stackoverflow.com/questions/6917107/how-can-i-redirect-http-requests-made-from-an-ipad/11757977#11757977
+  just set http proxy in manual with local machine ip
++ set up localhost to resolve for phone and other devices by editing  
+
+    > sudo nano /etc/apache2/extra/httpd-vhosts.conf
+
+    <VirtualHost *:80>
+        ServerName localhost
+        DocumentRoot /Library/WebServer/Documents/all-collected-voices.local
+    </VirtualHost>
+
+    > sudo apachectl restart
+
+    then just go to ip address, such as http://192.168.1.3
+- update loading status animation div
+- update play / pause status div

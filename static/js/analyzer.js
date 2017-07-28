@@ -1,6 +1,6 @@
 // based on http://jsfiddle.net/pc76H/2/
 // requires <div id = 'analyzer'> as a container
-// *todo* pass url as a parameter to init()
+// ** todo ** pass url as a parameter to init()
 
 (function(){    
     var canvas, audio, ajax, source, analyser, sound, animation, w, h, context, button;
@@ -110,6 +110,7 @@
     function requeststream(thisurl){
         var request = new XMLHttpRequest();
         request.addEventListener("load", requestfilelistener);
+        request.addEventListener("progress", updateProgress);
         request.open('GET', thisurl, true);     // async = true
         request.responseType = 'arraybuffer';
         // decode async
@@ -130,8 +131,19 @@
 
     function requestfilelistener () {
         console.log(this);
-        console.log(this.statusText);
+        console.log("status : " + this.statusText);
     }
+
+function updateProgress (oEvent) {
+  if (oEvent.lengthComputable) {
+    var percentComplete = oEvent.loaded / oEvent.total;
+    console.log("percentComplete = " + percentComplete);
+    console.log("oEvent.loaded = " + oEvent.loaded);
+  } else {
+    console.log("percentComplete = Unable to compute progress information since the total size is unknown");
+  }
+}
+
     
     window.addEventListener('load',init,false);
 
