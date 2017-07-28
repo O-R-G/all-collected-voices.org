@@ -69,8 +69,7 @@ for($i = 0; $i < count($body_parts); $i++)
                     // check html audio tag ref ** fix **
                     ?><audio id='mp3' class='mp3-container' src='<? echo m_url($m); ?>' type='audio/mpeg'>
                          ** Sorry, your browser does not support the audio element. **
-                    </audio>
-                    <div class='caption'>(click anywhere to play/pause audio)</div><?
+                    </audio><?
                 } else {
                     // otherwise, display img 
                     ?><div><img src="<? echo m_url($m);?>" class="fullscreen"></div><?

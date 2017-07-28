@@ -42,5 +42,6 @@ x localhost for mobile debug
     > sudo apachectl restart
 
     then just go to ip address, such as http://192.168.1.3
-- update loading status animation div
-- update play / pause status div
++ update loading status animation div
+x update play / pause status div
+x click handling page vs audio

@@ -137,15 +137,13 @@
     function updateprogress (e) {
         if (e.lengthComputable) {
             var percentcomplete = e.loaded / e.total;
-            console.log("percentcomplete = " + percentcomplete);
-            console.log("e.loaded = " + e.loaded)
-            context.fillRect(10,canvas.height*.64,canvas.width*percentcomplete,20);
+            if (debug) console.log("percentcomplete = " + percentcomplete);
+            if (debug) console.log("e.loaded = " + e.loaded)
+            context.fillRect(10,canvas.height*.64,canvas.width*percentcomplete,1);
         } else {
-            console.log("Unable to compute progress information since the total size is unknown");
+            console.log("Unable to compute progress information as total size unknown");
         }
     }
-
     
     window.addEventListener('load',init,false);
-
 })();
