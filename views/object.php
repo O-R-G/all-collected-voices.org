@@ -65,9 +65,7 @@ for($i = 0; $i < count($body_parts); $i++)
 			{
                 // if media type == mp3 then insert html audio player
                 if ($m[type] == 'mp3') {
-                    // this tag populates in funny way (looks empty in safari inspector)
-                    // check html audio tag ref ** fix **
-                    ?><audio id='mp3' class='mp3-container' src='<? echo m_url($m); ?>' type='audio/mpeg'>
+                    ?><audio controls id='mp3' class='mp3-container' src='<? echo m_url($m); ?>' type='audio/mpeg'>
                          ** Sorry, your browser does not support the audio element. **
                     </audio><?
                 } else {

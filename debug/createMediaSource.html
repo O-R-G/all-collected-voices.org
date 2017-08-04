@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Web Audio API createMediaSourceElement Test</title>
+<style>
+canvas {
+  border: 1px solid black;
+}
+</style>
+</head>
+<body>
+
+<canvas id="fft" width="512" height="250"></canvas>
+<audio id="voice" src="http://www.html5rocks.com/en/tutorials/webaudio/intro/sounds/organ-echo-chords.wav" controls autoplay></audio>
+
+<script>
+var canvas = document.getElementById('fft');
+var ctx = canvas.getContext('2d');
+canvas.width = document.body.clientWidth / 1.4;
+
+const CANVAS_HEIGHT = canvas.height;
+const CANVAS_WIDTH = canvas.width;
+
+var audioElement = document.querySelector('#voice');
+
+var context = new webkitAudioContext();
+var analyser = context.createAnalyser();
+
+function rafCallback(time) {
+  var freqByteData = new Uint8Array(analyser.frequencyBinCount);
+  analyser.getByteFrequencyData(freqByteData);
+
+  var SPACER_WIDTH = 5;
+  var numBars = Math.round(CANVAS_WIDTH / SPACER_WIDTH);
+
+  ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+  // Draw rectangle for each frequency bin.
+  for (var i = 0; i < numBars; ++i) {
+    var magnitude = freqByteData[i];
+    ctx.fillRect(i * SPACER_WIDTH, CANVAS_HEIGHT, 10, -magnitude);
+  }
+
+  window.webkitRequestAnimationFrame(rafCallback, canvas);
+}
+
+function onLoad(e) {
+  var source = context.createMediaElementSource(audioElement);
+  source.connect(analyser);
+  analyser.connect(context.destination);
+
+  rafCallback();
+}
+
+window.addEventListener('load', onLoad, false);
+// onLoad();
+</script>
+</body>
+</html>

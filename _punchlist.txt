@@ -45,3 +45,5 @@ x localhost for mobile debug
 + update loading status animation div
 x update play / pause status div
 x click handling page vs audio
+- analyzer z-index and click handlers
+- async start audio playback

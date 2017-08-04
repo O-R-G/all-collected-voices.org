@@ -97,6 +97,12 @@ canvas {
     left: 0;
 }
 
+#play_pause_button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+
 #analyzer {
     position: fixed;
     bottom: 0;
