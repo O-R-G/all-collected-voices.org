@@ -2,7 +2,8 @@
 // requires <div id = 'analyzer'> as a container
 // requires <div id = 'jingle'> or <div id = 'mp3'>
 
-(function(){
+// (function(){
+
     var canvas, audio, ajax, source, analyser, sound, animation, w, h, context, button;
     var globalbuffer;
     var loaded, started, playing;
@@ -164,5 +165,7 @@
 
     /* end deprecated */
     
+    // load script only once doc is loaded
     window.addEventListener('load',init,false);
-})();
+
+// })();
