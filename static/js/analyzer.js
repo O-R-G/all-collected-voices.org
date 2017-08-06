@@ -22,37 +22,42 @@
         var container = document.getElementById("analyzer");
         container.appendChild(canvas);
 
-        // webaudio    
+        // audio context
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         audio = new AudioContext();
-        // ios audio.createMediaElementSource does not connect to analyser (bug)
-        // https://bugs.chromium.org/p/chromium/issues/detail?id=112368
+
+        // audio source
+        mp3 = document.getElementById('mp3');   // <audio> element
         if (ios) {
+            // createMediaElementSource doesnt work with ios
+            // https://bugs.chromium.org/p/chromium/issues/detail?id=112368
+            // use XMLHttpRequest to load buffer, calls start() when finished
             source = audio.createBufferSource();
-            requeststream(url);    
+            requeststream(url);
         } else {
-            mp3 = document.getElementById('mp3');
+            // otherwise, get source from <audio>
             if (!mp3)
                 mp3 = document.getElementById('jingle');
             source = audio.createMediaElementSource(mp3);
         }
+        
+        // audio analyser
         analyser = audio.createAnalyser();
         analyser.smoothingTimeConstant = 0.85;
         analyser.fftSize = FF;
         source.connect(analyser);
         analyser.connect(audio.destination);
-        if (ios) {
-            start();
-        } else {
+        if (!ios) {
             animate();
             if (mp3.id=='jingle')
                 mp3.play(); 
         }
+
+        // event handlers
         audio.onstatechange = function() {
             if (debug) console.log("audio state change : " + audio.state);
-        }    
-
-        if (ios)
+        }
+        if (ios && !mp3)
             document.addEventListener('click', start, false);
         window.removeEventListener('load',init,false);
     }
@@ -66,7 +71,7 @@
             // ios -- init
             // osx -- init, start
             // start audio from time 0, start animation
-            // source.start(0);
+            source.start(0);
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
             animation = requestAnimationFrame(animate);
             started = true;
@@ -75,6 +80,7 @@
         } else if (started && !playing) {
             // ios -- start
             audio.resume();
+            animate();
             playing = true;
             if (debug) alert("resume start");
         } else if (started && playing) {
