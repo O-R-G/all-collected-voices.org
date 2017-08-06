@@ -48,4 +48,7 @@ x click handling page vs audio
 + analyzer z-index and click handlers
 x async start audio playback
 x debug ios audio playback -- dealing with touch events and starting audio context
-- add fake data to ios playback
+x add fake data to ios playback
+- test tmp logic on phone
+- may have to backtrack to xmlhttprequest
+- catch audio still playing (webaudio) when leave the page and stop audio

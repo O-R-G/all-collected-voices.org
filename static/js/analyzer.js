@@ -9,57 +9,70 @@
     var loaded, started, playing;
     var mp3;
     var url = 'media/mp3/all-collected-voices.mp3';
+    var FF = 2048/4;      // frequency resolution
     var debug = false;
     var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
     function init(){
-        // canvas
-        var FF=2048/4;
-        canvas=document.createElement('canvas');
-        w=canvas.width=FF/2;
-        h=canvas.height=200;
+        canvas = document.createElement('canvas');
+        w = canvas.width = FF/2;
+        h = canvas.height = 200;
         context=canvas.getContext("2d");
         var container = document.getElementById("analyzer");
         container.appendChild(canvas);
+        mp3 = document.getElementById('mp3') || document.getElementById('jingle');
+        mp3.oncanplay = start_webaudio();
+        if (mp3.id == 'jingle') {
+            if (ios)
+                document.addEventListener('click', play_pause, false);
+            else
+                play_pause();
+        }
+        // add listener for leaving page to stop the webaudio context
+        // and pause the <audio>
+        window.removeEventListener('load',init,false);
+    }
 
-        // audio context
+    function start_webaudio() {
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         audio = new AudioContext();
-
-        // audio source
-        mp3 = document.getElementById('mp3');   // <audio> element
-        if (ios) {
-            // createMediaElementSource doesnt work with ios
-            // https://bugs.chromium.org/p/chromium/issues/detail?id=112368
-            // use XMLHttpRequest to load buffer, calls start() when finished
-            source = audio.createBufferSource();
-            requeststream(url);
-        } else {
-            // otherwise, get source from <audio>
-            if (!mp3)
-                mp3 = document.getElementById('jingle');
-            source = audio.createMediaElementSource(mp3);
-        }
-        
-        // audio analyser
+        source = audio.createMediaElementSource(mp3);
         analyser = audio.createAnalyser();
         analyser.smoothingTimeConstant = 0.85;
         analyser.fftSize = FF;
         source.connect(analyser);
         analyser.connect(audio.destination);
-        if (!ios) {
-            animate();
-            if (mp3.id=='jingle')
-                mp3.play(); 
-        }
-
-        // event handlers
+        animate();
         audio.onstatechange = function() {
             if (debug) console.log("audio state change : " + audio.state);
         }
-        if (ios && !mp3)
-            document.addEventListener('click', start, false);
-        window.removeEventListener('load',init,false);
+        // build checkif start_webaudio
+        // or have this function return true or false and check elsewhere
+        /*
+        // test if the above worked -- how?
+        // if not then load via XMLHttpRequest
+        if (ios) {
+            // createMediaElementSource doesnt work with ios
+
+            // https://bugs.chromium.org/p/chromium/issues/detail?id=112368
+            // use XMLHttpRequest to load buffer, calls start() when finished
+            source = audio.createBufferSource();
+            requeststream(url);
+
+            // could rewrite start() to startXMLRequestplayback or somesuch
+            // and make it more specific
+        }   
+        */
+    }
+
+    function play_pause(e){
+        if (mp3.paused) {
+            mp3.play();
+            playing = true;                
+        } else {
+            mp3.pause();
+            playing = false;  
+        }
     }
 
     function start(e){
@@ -89,17 +102,6 @@
             audio.suspend();
             playing = false;
             if (debug) alert("suspend");
-        }
-    }
-
-    function play_pause(e){
-        if (!playing) {
-            mp3.play();
-            animate();
-            playing = true;                
-        } else {
-            mp3.pause();
-            playing = true;                
         }
     }
 
