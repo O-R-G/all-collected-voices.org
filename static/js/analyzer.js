@@ -21,7 +21,9 @@
         var container = document.getElementById("analyzer");
         container.appendChild(canvas);
         mp3 = document.getElementById('mp3') || document.getElementById('jingle');
-        mp3.oncanplay = start_webaudio();
+        // mp3.oncanplay = start_webaudio();
+        // mp3.onloadstart = start_webaudio();
+	start_webaudio();
         if (mp3.id == 'jingle') {
             if (ios)
                 document.addEventListener('click', play_pause, false);
@@ -31,7 +33,7 @@
         window.onunload = function () {
             mp3.pause();
         }
-        window.removeEventListener('load',init,false);
+        // window.removeEventListener('load',init,false);
     }
 
     function start_webaudio() {
@@ -175,6 +177,9 @@
     /* end deprecated */
     
     // load script only once doc is loaded
-    window.addEventListener('load',init,false);
-
+    // window.addEventListener('load',init,false);
+    // document.addEventListener('load',init,false);
+    // onload waits for everything to load including audio, 
+    // so init() to start analyzer canvas right away
+    init();
 // })();
