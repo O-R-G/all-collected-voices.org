@@ -28,8 +28,9 @@
             else
                 play_pause();
         }
-        // add listener for leaving page to stop the webaudio context
-        // and pause the <audio>
+        window.onunload = function () {
+            mp3.pause();
+        }
         window.removeEventListener('load',init,false);
     }
 
