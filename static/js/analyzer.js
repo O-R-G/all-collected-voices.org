@@ -27,13 +27,13 @@
         if (mp3.id == 'jingle') {
             if (ios)
                 document.addEventListener('click', play_pause, false);
-            else
-                play_pause();
+            // else
+               // play_pause();
         }
         window.onunload = function () {
             mp3.pause();
         }
-        window.removeEventListener('load',init,false);
+        // document.removeEventListener('load',init,false);
     }
 
     function start_webaudio() {
@@ -177,9 +177,9 @@
     /* end deprecated */
     
     // load script only once doc is loaded
-    window.addEventListener('load',init,false);
+    // window.addEventListener('load',init,false);
     // document.addEventListener('load',init,false);
     // onload waits for everything to load including audio, 
     // so init() to start analyzer canvas right away
-    // init();
+    init();
 // })();
