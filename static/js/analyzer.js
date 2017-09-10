@@ -2,8 +2,6 @@
 // requires <div id = 'analyzer'> as a container
 // requires <div id = 'jingle'> or <div id = 'mp3'>
 
-// (function(){
-
     var canvas, audio, ajax, source, analyser, sound, animation, w, h, context, button;
     var globalbuffer;
     var loaded, started, playing;
@@ -21,19 +19,9 @@
         var container = document.getElementById("analyzer");
         container.appendChild(canvas);
         mp3 = document.getElementById('mp3') || document.getElementById('jingle');
-        // mp3.oncanplay = start_webaudio();
-        // mp3.onloadstart = start_webaudio();
     	start_webaudio();
-        if (mp3.id == 'jingle') {
-            if (ios)
-                document.addEventListener('click', play_pause, false);
-            // else
-               // play_pause();
-        }
-        window.onunload = function () {
-            mp3.pause();
-        }
-        // document.removeEventListener('load',init,false);
+        if (mp3.id == 'jingle')
+            document.addEventListener('click', play_pause, false);
     }
 
     function start_webaudio() {
@@ -49,23 +37,6 @@
         audio.onstatechange = function() {
             if (debug) console.log("audio state change : " + audio.state);
         }
-        // build checkif start_webaudio
-        // or have this function return true or false and check elsewhere
-        /*
-        // test if the above worked -- how?
-        // if not then load via XMLHttpRequest
-        if (ios) {
-            // createMediaElementSource doesnt work with ios
-
-            // https://bugs.chromium.org/p/chromium/issues/detail?id=112368
-            // use XMLHttpRequest to load buffer, calls start() when finished
-            source = audio.createBufferSource();
-            requeststream(url);
-
-            // could rewrite start() to startXMLRequestplayback or somesuch
-            // and make it more specific
-        }   
-        */
     }
 
     function play_pause(e){
@@ -173,13 +144,5 @@
             console.log("Unable to compute progress information as total size unknown");
         }
     }
-
-    /* end deprecated */
     
-    // load script only once doc is loaded
-    // window.addEventListener('load',init,false);
-    // document.addEventListener('load',init,false);
-    // onload waits for everything to load including audio, 
-    // so init() to start analyzer canvas right away
     init();
-// })();
