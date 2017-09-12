@@ -27,8 +27,8 @@ if(!$uu->id)
 <div id="skull-container">
     &nbsp;
 	<!-- object id="skull" class="large skull visible h-centre" data="<? echo $img ?>"></object-->
-	<!-- <img id="skull" class="large skull visible" src="<? echo $img ?>"> -->
-	<!-- <img id="ex" class="large skull ex hidden" src="<? echo $img_alt ?>"> -->
+	<img id="skull" class="large skull visible" src="<? echo $img ?>">
+	<img id="ex" class="large skull ex hidden" src="<? echo $img_alt ?>">
 </div><?
 }
 else
