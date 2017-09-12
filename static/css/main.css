@@ -116,12 +116,12 @@ canvas {
 
 #skull-container {
 	position: fixed;
+    top: 0px;
 	right: 0px;
-	width: 100%;
-/* 
+    background-color:#F00;
+    opacity: 0.5;
 	height: 100%;
 	width: 100%;
- */
 }
 
 #skull-container.lower-right {
@@ -251,7 +251,7 @@ object.large {
 }
 
 img.small {
-	width: 33vw;
+	width: 0vw;
 }
 
 .stage {
