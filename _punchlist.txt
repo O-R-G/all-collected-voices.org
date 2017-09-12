@@ -52,4 +52,4 @@ x add fake data to ios playback
 + test tmp logic on phone
 x may have to backtrack to xmlhttprequest
 + catch audio still playing (webaudio) when leave the page and stop audio
-
+x tried to fix click on name but never worked
