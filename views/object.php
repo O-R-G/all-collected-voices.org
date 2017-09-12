@@ -87,6 +87,7 @@ for($i = 0; $i < count($body_parts); $i++)
 } 
 ?></section>
 
+<!-- 
 <script type="text/javascript" src="<? echo $host; ?>static/js/screenfull.js"></script>	
 <script>
 	var imgs = document.getElementsByClassName('fullscreen');
@@ -104,4 +105,4 @@ for($i = 0; $i < count($body_parts); $i++)
 		}, false);
 	}
 </script>
-
+-->
