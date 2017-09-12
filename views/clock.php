@@ -55,5 +55,6 @@ if($show_menu)
 else
 { ?>isHidden = true;<? }
 ?>
-document.getElementById("skull-container").addEventListener("click", showHide);
+// document.getElementById("skull-container").addEventListener("click", showHide);
+document.addEventListener("click", showHide, false);
 </script>
