@@ -2,6 +2,8 @@
 // requires <div id = 'analyzer'> as a container
 // requires <div id = 'jingle'> or <div id = 'mp3'>
 
+    console.log("hello!");
+
     var canvas, audio, ajax, source, analyser, sound, animation, w, h, context, button;
     var globalbuffer;
     var loaded, started, playing;
@@ -10,6 +12,8 @@
     var FF = 2048/4;      // frequency resolution
     var debug = false;
     var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    // console.log("ios : " + ios);
 
     function init(){
         canvas = document.createElement('canvas');

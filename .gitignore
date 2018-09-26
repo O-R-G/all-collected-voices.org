@@ -4,3 +4,11 @@
 
 # emacs backups
 *~
+
+# media
+media/*.jpg
+media/*.gif
+media/*.png
+media/*.pdf
+media/*.mp3
+media/*.m4a
