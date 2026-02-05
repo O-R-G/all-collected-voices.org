@@ -1,4 +1,5 @@
 // var isHidden;
+let isHidden = true;
 var scrollPos = 0;
 
 function showHide()

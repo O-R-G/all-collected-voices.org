@@ -23,12 +23,14 @@
         var container = document.getElementById("analyzer");
         container.appendChild(canvas);
         mp3 = document.getElementById('mp3') || document.getElementById('jingle');
+        if(!mp3) return;
     	start_webaudio();
         if (mp3.id == 'jingle')
             document.addEventListener('click', play_pause, false);
     }
 
     function start_webaudio() {
+        if(!mp3) return;
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         audio = new AudioContext();
         source = audio.createMediaElementSource(mp3);

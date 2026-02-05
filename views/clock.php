@@ -1,6 +1,7 @@
 <?
 $sql = "select id from objects where url='settings'";
-$settings_id = $db->query($sql)->fetch_assoc()['id'];
+$settings_obj = $db->query($sql)->fetch_assoc();
+$settings_id = $settings_obj['id'] ?? null;
 if($settings_id)
 {
 	$m = $oo->media($settings_id)[0];
@@ -19,10 +20,11 @@ else {
 	$img = "media/svg/blank.svg";
 	$img_alt = "media/svg/blank.svg";
 }
-?><script type="text/javascript" src="<? echo $host; ?>static/js/global.js"></script>
-<script type="text/javascript" src="<? echo $host; ?>static/js/clock.js"></script><?
+?><script type="text/javascript" src="static/js/global.js"></script>
+<script type="text/javascript" src="static/js/clock.js"></script><?
 if(!$uu->id)
 {
+	
 ?>
 <div id="skull-container" class="v-centre">
 	<!-- object id="skull" class="large skull visible h-centre" data="<? echo $img ?>"></object-->
@@ -32,6 +34,7 @@ if(!$uu->id)
 }
 else
 {
+	var_dump('sss');
 	if($show_menu)
 	{
 	?><div id="skull-container" class="lower-right">
@@ -41,6 +44,7 @@ else
 	}
 	else
 	{
+		echo 'ss';
 	?><div id="skull-container" class="lower-right">
 		<img id="skull" class="small skull visible" src="<? echo $img; ?>">
 		<img id="ex" class="small skull ex hidden" src="<? echo $img_alt ?>">
@@ -48,7 +52,7 @@ else
 	}
 }
 ?><script>
-var isHidden;
+
 <?
 if($show_menu)
 { ?>isHidden = false;<? }
