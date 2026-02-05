@@ -1,4 +1,6 @@
-<?
+<?php
+require __DIR__ . '/../static/php/vendor/autoload.php';
+
 // namespace stuff
 use \Michelf\Markdown;
 
@@ -16,8 +18,14 @@ function process_body($b)
 	return $body_parts;
 }
 $oarr = $oo->get($uu->id);
-$body = $oarr["body"];
-$body_parts = process_body($body);
+if(is_array($oarr) && isset($oarr['body'])) {
+	$body = $oarr["body"];
+	$body_parts = process_body($body);
+} else {
+	$body = '';
+	$body_parts = process_body($body);
+}
+
 $media = $oo->media($uu->id);
 
 // header (menu or breadcrumbs)

@@ -17,3 +17,5 @@ media/*.m4a
 
 robots.txt
 *.sql
+
+static/php/vendor/

@@ -17,20 +17,28 @@ $uu = new URL();
 // $rr = new Request();
 
 // self
-if($uu->id)
+// if($uu->id)
+// 	$item = $oo->get($uu->id);
+// else
+// 	$item = $oo->get(0);
+// $name = ltrim(strip_tags($item["name1"]), ".");
+if(isset($uu->id))
 	$item = $oo->get($uu->id);
-else
-	$item = $oo->get(0);
-$name = ltrim(strip_tags($item["name1"]), ".");
+else if($uri[1] === 'probe' && count($uri) == 2) {
+	$item = ['id' => false, 'name1' => 'Probe'];
+}
+else {
+    http_response_code(404);
+    echo 'nothing here.';
+    die();
+}
+$name = isset($item) ? ltrim(strip_tags($item["name1"]), ".") : '';
 
 // document title
 $item = $oo->get($uu->id);
-$title = $item["name1"];
+// $title = $item["name1"];
 $db_name = "All: Collected Voices";
-if ($title)
-	$title = $db_name ." | ". $title;
-else
-	$title = $db_name;
+$name = $name ? $db_name : $db_name . " | " . $name;
 
 $nav = $oo->nav($uu->ids);
 
