@@ -48,7 +48,7 @@ $show_menu = false;
 if($uu->id)
 {
 	$is_leaf = empty($oo->children_ids($uu->id));
-	$internal = (substr($_SERVER['HTTP_REFERER'], 0, strlen($host)) === $host);
+	$internal = isset($_SERVER['HTTP_REFERER']) && (substr($_SERVER['HTTP_REFERER'], 0, strlen($host)) === $host);	
 	
 	if(!$is_leaf && $internal)
 		$show_menu = true;

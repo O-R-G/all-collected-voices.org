@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../static/php/vendor/autoload.php';
+require __DIR__ . '/../static/php/php-markdown-1.6.0/Michelf/Markdown.inc.php';
 
 // namespace stuff
 use \Michelf\Markdown;
