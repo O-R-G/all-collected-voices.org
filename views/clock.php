@@ -1,7 +1,7 @@
 <?
 $sql = "select id from objects where url='settings'";
 $settings_obj = $db->query($sql)->fetch_assoc();
-$settings_id = $settings_obj['id'] ?? null;
+$settings_id = isset($settings_obj['id']) && $settings_obj['id'] ? $settings_obj['id'] : null;
 if($settings_id)
 {
 	$m = $oo->media($settings_id)[0];
