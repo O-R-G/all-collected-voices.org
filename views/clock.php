@@ -34,7 +34,6 @@ if(!$uu->id)
 }
 else
 {
-	var_dump('sss');
 	if($show_menu)
 	{
 	?><div id="skull-container" class="lower-right">
@@ -44,7 +43,6 @@ else
 	}
 	else
 	{
-		echo 'ss';
 	?><div id="skull-container" class="lower-right">
 		<img id="skull" class="small skull visible" src="<? echo $img; ?>">
 		<img id="ex" class="small skull ex hidden" src="<? echo $img_alt ?>">

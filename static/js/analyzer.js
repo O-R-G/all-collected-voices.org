@@ -23,6 +23,7 @@
         var container = document.getElementById("analyzer");
         container.appendChild(canvas);
         mp3 = document.getElementById('mp3') || document.getElementById('jingle');
+        console.log(mp3);
         if(!mp3) return;
     	start_webaudio();
         if (mp3.id == 'jingle')
@@ -45,8 +46,10 @@
         }
     }
 
-    function play_pause(e){
+    async function play_pause(e){
+        console.log('play_pause', mp3.paused);
         if (mp3.paused) {
+            await audio.resume();
             mp3.play();
             playing = true;                
         } else {

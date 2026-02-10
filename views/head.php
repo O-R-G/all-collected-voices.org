@@ -1,4 +1,5 @@
-<?
+<?php
+
 // path to config file
 $config = "open-records-generator/config/config.php";
 require_once($config);
@@ -55,7 +56,9 @@ if($uu->id)
 }
 
 $credit = "An <a href='an-audio-archive'>audio archive</a> produced by <a href='http://www.goethe.de/aproposdocumenta' target='_new'>Goethe-Institut Athen</a> w/ <a href='http://www.radioathenes.org' target='_new'>Radio Athènes</a>";
-
+$body_class = array();
+if(!$uri[1])
+	$body_class[] = 'home';
 
 ?><!DOCTYPE html>
 <html>
@@ -67,7 +70,7 @@ $credit = "An <a href='an-audio-archive'>audio archive</a> produced by <a href='
 		<link rel="stylesheet" href="/static/css/krungthep.css">
 		<link rel="apple-touch-icon" href="/media/png/touchicon.png" />
 	</head>
-	<body>
+	<body class="<?php echo implode(' ', $body_class); ?>">
 	<!-- 
         <div id="controls">
         <audio controls>

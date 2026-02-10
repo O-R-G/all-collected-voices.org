@@ -17,6 +17,9 @@ function process_body($b)
 	}
 	return $body_parts;
 }
+
+$mp3_exists = FALSE;
+
 $oarr = $oo->get($uu->id);
 if(is_array($oarr) && isset($oarr['body'])) {
 	$body = $oarr["body"];
@@ -108,7 +111,7 @@ for($i = 0; $i < count($body_parts); $i++)
 				screenfull.toggle(this);
 			}
 			index = i;
-			console.log(index);
+			// console.log(index);
 		}, false);
 	}
 </script>
