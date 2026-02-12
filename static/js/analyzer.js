@@ -49,7 +49,7 @@
     }
 
     async function play_pause(e){
-        console.log('play_pause', mp3.paused);
+        // console.log('play_pause', mp3.paused);
         if (mp3.paused) {
             handlePlay();             
         } else {
