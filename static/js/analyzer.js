@@ -2,6 +2,8 @@
 // requires <div id = 'analyzer'> as a container
 // requires <div id = 'jingle'> or <div id = 'mp3'>
 
+    console.log("hello!");
+
     var canvas, audio, ajax, source, analyser, sound, animation, w, h, context, button;
     var globalbuffer;
     var loaded, started, playing;
@@ -11,6 +13,8 @@
     var debug = false;
     var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
+    // console.log("ios : " + ios);
+
     function init(){
         canvas = document.createElement('canvas');
         w = canvas.width = FF/2;
@@ -19,12 +23,17 @@
         var container = document.getElementById("analyzer");
         container.appendChild(canvas);
         mp3 = document.getElementById('mp3') || document.getElementById('jingle');
+        console.log(mp3);
+        if(!mp3) return;
     	start_webaudio();
         if (mp3.id == 'jingle')
             document.addEventListener('click', play_pause, false);
+        else 
+            addAudioListeners();
     }
 
     function start_webaudio() {
+        if(!mp3) return;
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         audio = new AudioContext();
         source = audio.createMediaElementSource(mp3);
@@ -39,16 +48,25 @@
         }
     }
 
-    function play_pause(e){
+    async function play_pause(e){
+        console.log('play_pause', mp3.paused);
         if (mp3.paused) {
-            mp3.play();
-            playing = true;                
+            handlePlay();             
         } else {
-            mp3.pause();
-            playing = false;  
+            handlePause();
         }
     }
-
+    async function handlePlay(){
+        if(playing) return;
+        await audio.resume();
+        mp3.play();
+        playing = true;  
+    }
+    function handlePause(){
+        if(!playing) return;
+        mp3.pause();
+        playing = false; 
+    }
     function start(e){
         // start (desktop)
         // click to start (ios)
@@ -144,5 +162,12 @@
             console.log("Unable to compute progress information as total size unknown");
         }
     }
-    
+    function addAudioListeners(){
+        mp3.addEventListener('play', ()=>{
+            handlePlay();
+        })
+        mp3.addEventListener('pause', ()=>{
+            handlePause();
+        })
+    }
     init();

@@ -88,9 +88,6 @@ canvas {
 	margin-top: 10px;
 }
 
-.#mp3 {
-}
-
 #controls {
     position: fixed;
     top: 0;
@@ -282,7 +279,9 @@ img.small {
 #skull.fade {
 	position: absolute;
 }
-
+#jingle {
+	display: none;
+}
 @-webkit-keyframes fadeOut { 
 	from { 
 		opacity:1; 

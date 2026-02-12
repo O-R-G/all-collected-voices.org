@@ -1,6 +1,7 @@
 <?
 $sql = "select id from objects where url='settings'";
-$settings_id = $db->query($sql)->fetch_assoc()['id'];
+$settings_obj = $db->query($sql)->fetch_assoc();
+$settings_id = isset($settings_obj['id']) && $settings_obj['id'] ? $settings_obj['id'] : null;
 if($settings_id)
 {
 	$m = $oo->media($settings_id)[0];
@@ -19,10 +20,11 @@ else {
 	$img = "media/svg/blank.svg";
 	$img_alt = "media/svg/blank.svg";
 }
-?><script type="text/javascript" src="<? echo $host; ?>static/js/global.js"></script>
-<script type="text/javascript" src="<? echo $host; ?>static/js/clock.js"></script><?
+?><script type="text/javascript" src="static/js/global.js"></script>
+<script type="text/javascript" src="static/js/clock.js"></script><?
 if(!$uu->id)
 {
+	
 ?>
 <div id="skull-container">
     &nbsp;
@@ -49,7 +51,7 @@ else
 	}
 }
 ?><script>
-var isHidden;
+
 <?
 if($show_menu)
 { ?>isHidden = false;<? }

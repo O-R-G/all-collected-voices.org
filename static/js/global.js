@@ -1,8 +1,11 @@
 // var isHidden;
+let isHidden = true;
 var scrollPos = 0;
+let mp3IsPlaying=false;
 
 function showHide()
 {
+	// console.log('showHide');
 	var cols = document.getElementsByClassName("column-container");
 	var body = document.getElementById("body");
 	var header = document.getElementById("header");
@@ -10,6 +13,9 @@ function showHide()
 	var ex = document.getElementById("ex");
 	if(isHidden)
 	{
+		// const homeMp3 = document.querySelector('.home #jingle');
+		// console.log(homeMp3);
+		// if(homeMp3) homeMp3.play();
 		scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
 		// show the menu
 		for(var i = 0; i < cols.length; i++)

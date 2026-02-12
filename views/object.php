@@ -1,4 +1,6 @@
-<?
+<?php
+require __DIR__ . '/../static/php/php-markdown-1.6.0/Michelf/Markdown.inc.php';
+
 // namespace stuff
 use \Michelf\Markdown;
 
@@ -15,9 +17,18 @@ function process_body($b)
 	}
 	return $body_parts;
 }
+
+$mp3_exists = FALSE;
+
 $oarr = $oo->get($uu->id);
-$body = $oarr["body"];
-$body_parts = process_body($body);
+if(is_array($oarr) && isset($oarr['body'])) {
+	$body = $oarr["body"];
+	$body_parts = process_body($body);
+} else {
+	$body = '';
+	$body_parts = process_body($body);
+}
+
 $media = $oo->media($uu->id);
 
 // header (menu or breadcrumbs)
@@ -39,7 +50,7 @@ else
 				}
 				else
 				{
-				?><a href="<? echo $host.$a_url; ?>">ALL: COLLECTED VOICES</a><?
+				?><a href="/">ALL: COLLECTED VOICES</a><?
 				}
 			?></li>
 			<ul class="nav-level">
@@ -64,7 +75,7 @@ for($i = 0; $i < count($body_parts); $i++)
 			foreach($media as $m)
 			{
                 // if media type == mp3 then insert html audio player
-                if ($m[type] == 'mp3') {
+                if ($m['type'] == 'mp3') {
                     $mp3_exists = TRUE;
                     ?><audio controls id='mp3' class='mp3-container' src='<? echo m_url($m); ?>' type='audio/mpeg'>
                          ** Sorry, your browser does not support the audio element. **
@@ -74,8 +85,8 @@ for($i = 0; $i < count($body_parts); $i++)
                     ?><div><img src="<? echo m_url($m);?>" class="fullscreen"></div><?
                 }
                 // caption
-                if ($m[caption]) 
-                    ?><div class='caption'><? echo $m[caption]; ?></div><?   
+                if ($m['caption']) 
+                    ?><div class='caption'><? echo $m['caption']; ?></div><?   
             } 
 		    $j++;
 		}
@@ -87,7 +98,7 @@ for($i = 0; $i < count($body_parts); $i++)
 } 
 ?></section>
 
-<script type="text/javascript" src="<? echo $host; ?>static/js/screenfull.js"></script>	
+<script type="text/javascript" src="/static/js/screenfull.js"></script>	
 <script>
 	var imgs = document.getElementsByClassName('fullscreen');
 	var i;
@@ -100,7 +111,7 @@ for($i = 0; $i < count($body_parts); $i++)
 				screenfull.toggle(this);
 			}
 			index = i;
-			console.log(index);
+			// console.log(index);
 		}, false);
 	}
 </script>

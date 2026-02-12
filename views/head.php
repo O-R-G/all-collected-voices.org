@@ -1,4 +1,5 @@
-<?
+<?php
+
 // path to config file
 $config = "open-records-generator/config/config.php";
 require_once($config);
@@ -17,20 +18,28 @@ $uu = new URL();
 // $rr = new Request();
 
 // self
-if($uu->id)
+// if($uu->id)
+// 	$item = $oo->get($uu->id);
+// else
+// 	$item = $oo->get(0);
+// $name = ltrim(strip_tags($item["name1"]), ".");
+if(isset($uu->id))
 	$item = $oo->get($uu->id);
-else
-	$item = $oo->get(0);
-$name = ltrim(strip_tags($item["name1"]), ".");
+else if($uri[1] === 'probe' && count($uri) == 2) {
+	$item = ['id' => false, 'name1' => 'Probe'];
+}
+else {
+    http_response_code(404);
+    echo 'nothing here.';
+    die();
+}
+$name = isset($item) ? ltrim(strip_tags($item["name1"]), ".") : '';
 
 // document title
 $item = $oo->get($uu->id);
-$title = $item["name1"];
+// $title = $item["name1"];
 $db_name = "All: Collected Voices";
-if ($title)
-	$title = $db_name ." | ". $title;
-else
-	$title = $db_name;
+$name = $name ? $db_name : $db_name . " | " . $name;
 
 $nav = $oo->nav($uu->ids);
 
@@ -40,35 +49,37 @@ $show_menu = false;
 if($uu->id)
 {
 	$is_leaf = empty($oo->children_ids($uu->id));
-	$internal = (substr($_SERVER['HTTP_REFERER'], 0, strlen($host)) === $host);
+	$internal = isset($_SERVER['HTTP_REFERER']) && (substr($_SERVER['HTTP_REFERER'], 0, strlen($host)) === $host);	
 	
 	if(!$is_leaf && $internal)
 		$show_menu = true;
 }
 
-$credit = "An <a href='an-audio-archive'>audio archive</a> produced by <a href='http://www.goethe.de/aproposdocumenta' target='_new'>Goethe-Institut Athen</a> w/ <a href='http://www.radioathenes.org' target='_new'>Radio Athènes</a><br /><br />";
-
+$credit = "An <a href='an-audio-archive'>audio archive</a> produced by <a href='http://www.goethe.de/aproposdocumenta' target='_new'>Goethe-Institut Athen</a> w/ <a href='http://www.radioathenes.org' target='_new'>Radio Athènes</a>";
+$body_class = array();
+if(!$uri[1])
+	$body_class[] = 'home';
 
 ?><!DOCTYPE html>
 <html>
 	<head>
-		<title><? echo $title; ?></title>
+		<title><? echo $name; ?></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" href="/static/css/main.css">
 		<link rel="stylesheet" href="/static/css/krungthep.css">
 		<link rel="apple-touch-icon" href="/media/png/touchicon.png" />
 	</head>
-	<body>
-        <!--
+	<body class="<?php echo implode(' ', $body_class); ?>">
+	<!-- 
         <div id="controls">
-        <audio autoplay controls>
-            <source src="media/mp3/all-collected-voices_v1.mp3" type="audio/mpeg">
-            <source src="media/ogg/all-collected-voices_v1.ogg" type="audio/ogg">
+        <audio controls>
+            <source src="media/mp3/all-collected-voices.mp3" type="audio/mpeg">
+            <source src="media/ogg/all-collected-voices.ogg" type="audio/ogg">
             Sorry, but your browser does not support audio.
         </audio>
         </div>
-        -->
+	-->
 		<div id="page"><?
 			if(!$uu->id)
 			{
