@@ -28,6 +28,8 @@
     	start_webaudio();
         if (mp3.id == 'jingle')
             document.addEventListener('click', play_pause, false);
+        else 
+            addAudioListeners();
     }
 
     function start_webaudio() {
@@ -49,15 +51,22 @@
     async function play_pause(e){
         console.log('play_pause', mp3.paused);
         if (mp3.paused) {
-            await audio.resume();
-            mp3.play();
-            playing = true;                
+            handlePlay();             
         } else {
-            mp3.pause();
-            playing = false;  
+            handlePause();
         }
     }
-
+    async function handlePlay(){
+        if(playing) return;
+        await audio.resume();
+        mp3.play();
+        playing = true;  
+    }
+    function handlePause(){
+        if(!playing) return;
+        mp3.pause();
+        playing = false; 
+    }
     function start(e){
         // start (desktop)
         // click to start (ios)
@@ -153,5 +162,12 @@
             console.log("Unable to compute progress information as total size unknown");
         }
     }
-    
+    function addAudioListeners(){
+        mp3.addEventListener('play', ()=>{
+            handlePlay();
+        })
+        mp3.addEventListener('pause', ()=>{
+            handlePause();
+        })
+    }
     init();
