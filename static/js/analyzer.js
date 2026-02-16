@@ -2,172 +2,246 @@
 // requires <div id = 'analyzer'> as a container
 // requires <div id = 'jingle'> or <div id = 'mp3'>
 
-    console.log("hello!");
+console.log("hello!");
 
-    var canvas, audio, ajax, source, analyser, sound, animation, w, h, context, button;
-    var globalbuffer;
-    var loaded, started, playing;
-    var mp3;
-    var url = 'media/mp3/all-collected-voices.mp3';
-    var FF = 2048/4;      // frequency resolution
-    var debug = false;
-    var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+class Analyzer {
+    constructor(mp3) {
+        if(!mp3 || !mp3.length) {
+            console.log('mp3 is not found');
+            return;
+        }
+        this.mp3 = mp3;
+        this.audios = [];
+        for(const m of this.mp3) {
+            this.audios.push({
+                'el': m,
+                'ctx': null,
+                'source': null,
+                'analyser': null
+            })
+        }
+        this.currentIdx = 0;
+        this.currentMp3 = this.mp3[this.currentIdx];
+        // this.currentMp3 = this.mp3[0];
+        // console.log(this.currentMp3);
+        
+        this.canvas = null;
+        // this.audio = null;
+        this.ajax = null;
+        // this.source = null;
+        // this.analyser = null;
+        this.sound = null;
+        this.animation = null;
+        this.w = null;
+        this.h = null;
+        this.context = null;
+        this.button = null;
+        this.globalbuffer = null;
+        this.loaded = false;
+        this.started = false;
+        this.playing = false;
+        this.url = 'media/mp3/all-collected-voices.mp3';
+        this.FF = 2048 / 4; // frequency resolution
+        this.debug = false;
+        this.ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
 
-    // console.log("ios : " + ios);
-
-    function init(){
-        canvas = document.createElement('canvas');
-        w = canvas.width = FF/2;
-        h = canvas.height = 200;
-        context=canvas.getContext("2d");
+    init() {
+        this.canvas = document.createElement('canvas');
+        this.w = this.canvas.width = this.FF / 2;
+        this.h = this.canvas.height = 200;
+        this.context = this.canvas.getContext("2d");
         var container = document.getElementById("analyzer");
-        container.appendChild(canvas);
-        mp3 = document.getElementById('mp3') || document.getElementById('jingle');
-        console.log(mp3);
-        if(!mp3) return;
-    	start_webaudio();
-        if (mp3.id == 'jingle')
-            document.addEventListener('click', play_pause, false);
-        else 
-            addAudioListeners();
-    }
+        container.appendChild(this.canvas);
 
-    function start_webaudio() {
-        if(!mp3) return;
-        window.AudioContext = window.AudioContext || window.webkitAudioContext;
-        audio = new AudioContext();
-        source = audio.createMediaElementSource(mp3);
-        analyser = audio.createAnalyser();
-        analyser.smoothingTimeConstant = 0.85;
-        analyser.fftSize = FF;
-        source.connect(analyser);
-        analyser.connect(audio.destination);
-        animate();
-        audio.onstatechange = function() {
-            if (debug) console.log("audio state change : " + audio.state);
-        }
-    }
-
-    async function play_pause(e){
-        // console.log('play_pause', mp3.paused);
-        if (mp3.paused) {
-            handlePlay();             
+        this.startWebaudio();
+        if (this.currentMp3.id === 'jingle') {
+            document.addEventListener('click', this.playPause.bind(this), false);
         } else {
-            handlePause();
+            this.addAudioListeners();
         }
     }
-    async function handlePlay(){
-        if(playing) return;
-        await audio.resume();
-        mp3.play();
-        playing = true;  
+
+    startWebaudio() {
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        for(const data of this.audios) {
+            const ctx = new AudioContext();
+            console.log(data);
+            const source = ctx.createMediaElementSource(data['el']);
+            const analyser = ctx.createAnalyser();
+            analyser.smoothingTimeConstant = 0.85;
+            analyser.fftSize = this.FF;
+            source.connect(analyser);
+            analyser.connect(ctx.destination);
+            data['ctx'] = ctx;
+            data['source'] = source;
+            data['analyser'] = analyser;
+            ctx.onstatechange = () => {
+                if (this.debug) console.log("audio state change : " + ctx.state);
+            };
+        }
+        this.animate();
+        
     }
-    function handlePause(){
-        if(!playing) return;
+    // setAudio(){
+    //     this.source = this.audios[this.currentIdx].ctx.createMediaElementSource(this.currentMp3);
+    //     this.analyser = this.audios[this.currentIdx].ctx.createAnalyser();
+    //     this.audios[this.currentIdx].analyser.smoothingTimeConstant = 0.85;
+    //     this.audios[this.currentIdx].analyser.fftSize = this.FF;
+    //     this.audios[this.currentIdx].source.connect(this.analyser);
+    //     this.audios[this.currentIdx].analyser.connect(this.audios[this.currentIdx].ctx.destination);
+    // }
+
+    async playPause(audio) {
+        if (this.currentMp3.paused) {
+            this.handlePlay();
+        } else {
+            this.handlePause();
+        }
+    }
+
+    async handlePlay(mp3) {
+        // console.log('handlePlay0');
+        // console.log(audio === this.currentMp3);
+        if (this.playing && mp3 === this.currentMp3) return;
+        if(mp3 !== this.currentMp3) {
+            this.updateCurrentMp3(mp3); 
+            // this.currentMp3 = mp3;
+            // this.setAudio();
+        }
+        await this.audios[this.currentIdx].ctx.resume();
+        this.currentMp3.play();
+        this.playing = true;
+    }
+
+    handlePause(mp3) {
+        if (!this.playing) return;
         mp3.pause();
-        playing = false; 
+        this.playing = false;
     }
-    function start(e){
+
+    start() {
         // start (desktop)
         // click to start (ios)
-        if (!source.buffer) source.buffer = globalbuffer;
-        if (debug) console.log("audio.state = " + audio.state);
-        if (!started && !playing) {
+        if (!this.audios[this.currentIdx].source.buffer) this.audios[this.currentIdx].source.buffer = this.globalbuffer;
+        if (this.debug) console.log("audio.state = " + this.audios[this.currentIdx].ctx.state);
+        if (!this.started && !this.playing) {
             // ios -- init
             // osx -- init, start
             // start audio from time 0, start animation
-            source.start(0);
+            this.audios[this.currentIdx].source.start(0);
             window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
-            animation = requestAnimationFrame(animate);
-            started = true;
-            if (audio.state == "running") playing = true;
-            if (debug) alert("start");
-        } else if (started && !playing) {
+            this.animation = requestAnimationFrame(this.animate.bind(this));
+            this.started = true;
+            if (this.audios[this.currentIdx].ctx.state === "running") this.playing = true;
+            if (this.debug) alert("start");
+        } else if (this.started && !this.playing) {
             // ios -- start
-            audio.resume();
-            animate();
-            playing = true;
-            if (debug) alert("resume start");
-        } else if (started && playing) {
+            this.audios[this.currentIdx].ctx.resume();
+            this.animate();
+            this.playing = true;
+            if (this.debug) alert("resume start");
+        } else if (this.started && this.playing) {
             // ios -- suspend
             // osx -- suspend
-            audio.suspend();
-            playing = false;
-            if (debug) alert("suspend");
+            this.audios[this.currentIdx].ctx.suspend();
+            this.playing = false;
+            if (this.debug) alert("suspend");
         }
     }
 
-    function animate(){
-        var a = new Uint8Array(analyser.frequencyBinCount);
-        var y = new Uint8Array(analyser.frequencyBinCount);
+    animate() {
+        var a = new Uint8Array(this.audios[this.currentIdx].analyser.frequencyBinCount);
+        var y = new Uint8Array(this.audios[this.currentIdx].analyser.frequencyBinCount);
         var b, c, d;
-        analyser.getByteTimeDomainData(y);
-        analyser.getByteFrequencyData(a);
+        this.audios[this.currentIdx].analyser.getByteTimeDomainData(y);
+        this.audios[this.currentIdx].analyser.getByteFrequencyData(a);
         b = c = a.length;
-        d = w / c;
-        context.clearRect(0, 0, w, h);
-        while(b--){
-            // context.fillStyle='hsla('+(b/c*240)+','+(y[b]/255*100|0)+'%,50%,1)';     // rainbow
-            context.fillStyle='#000000';        // black
-            // var bh=a[b]+1;                   // for spectrum only
-            // context.fillRect(1*b,h-bh,1,bh); // spectrum
-            context.fillRect(1*b,y[b],1,1);     // wave
+        d = this.w / c;
+        this.context.clearRect(0, 0, this.w, this.h);
+        while (b--) {
+            // this.context.fillStyle='hsla('+(b/c*240)+','+(y[b]/255*100|0)+'%,50%,1)';     // rainbow
+            this.context.fillStyle = '#000000'; // black
+            // var bh=a[b]+1;                    // for spectrum only
+            // this.context.fillRect(1*b,this.h-bh,1,bh); // spectrum
+            this.context.fillRect(1 * b, y[b], 1, 1); // wave
         }
         window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
-        animation=requestAnimationFrame(animate);
+        this.animation = requestAnimationFrame(this.animate.bind(this));
     }
 
-    function readfile(e){
-        var a=new FileReader();
-        a.onload = function(e) {
-            audio.decodeAudioData(a.result,start,function(){console.log('Decoding Error')});
-        }
-        a.readAsArrayBuffer(this.files[0]);
+    readfile(e) {
+        var a = new FileReader();
+        var target = e && e.target ? e.target : this;
+        a.onload = () => {
+            this.audios[this.currentIdx].ctx.decodeAudioData(a.result, this.start.bind(this), function() { console.log('Decoding Error'); });
+        };
+        a.readAsArrayBuffer(target.files[0]);
     }
 
-    function requeststream(thisurl){
+    requeststream(thisurl) {
         var request = new XMLHttpRequest();
-        request.addEventListener("progress", updateprogress);
-        request.addEventListener("load", requestfilelistener);
-        request.open('GET', thisurl, true);     // async = true
+        request.addEventListener("progress", this.updateProgress.bind(this));
+        request.addEventListener("load", this.requestfilelistener);
+        request.open('GET', thisurl, true); // async = true
         request.responseType = 'arraybuffer';
         // decode async
-        request.onload = function() {           
-            audio.decodeAudioData(request.response, 
-                function(buffer) {
-                    globalbuffer = buffer;
-                    console.log(globalbuffer);
-                    loaded = true;
-                    start();        // only on desktop                                    
-                }, function(){
-                    loaded = false;
-                    console.log('Decoding error . . .')
-                });
-        }
+        request.onload = () => {
+            this.audios[this.currentIdx].ctx.decodeAudioData(
+                request.response,
+                (buffer) => {
+                    this.globalbuffer = buffer;
+                    console.log(this.globalbuffer);
+                    this.loaded = true;
+                    this.start(); // only on desktop
+                },
+                () => {
+                    this.loaded = false;
+                    console.log('Decoding error . . .');
+                }
+            );
+        };
         request.send();
     }
 
-    function requestfilelistener () {
+    requestfilelistener() {
         console.log(this);
         console.log("status : " + this.statusText);
     }
 
-    function updateprogress (e) {
+    updateProgress(e) {
         if (e.lengthComputable) {
             var percentcomplete = e.loaded / e.total;
-            if (debug) console.log("percentcomplete = " + percentcomplete);
-            if (debug) console.log("e.loaded = " + e.loaded)
-            context.fillRect(10,canvas.height*.64,canvas.width*percentcomplete,1);
+            if (this.debug) console.log("percentcomplete = " + percentcomplete);
+            if (this.debug) console.log("e.loaded = " + e.loaded);
+            this.context.fillRect(10, this.canvas.height * .64, this.canvas.width * percentcomplete, 1);
         } else {
             console.log("Unable to compute progress information as total size unknown");
         }
     }
-    function addAudioListeners(){
-        mp3.addEventListener('play', ()=>{
-            handlePlay();
-        })
-        mp3.addEventListener('pause', ()=>{
-            handlePause();
-        })
+    updateCurrentMp3(newMp3){
+        for(let i = 0; i < this.audios.length; i++) {
+            if(this.audios[i].el === newMp3) {
+                this.currentIdx = i;
+                this.currentMp3 = this.mp3[i];
+                return i;
+            }
+        }
     }
-    init();
+    addAudioListeners() {
+        for(const mp3 of this.mp3) {
+            mp3.addEventListener('play', () => {
+                this.handlePlay(mp3);
+            });
+        }
+        for(const mp3 of this.mp3) {
+            mp3.addEventListener('pause', () => {
+                this.handlePause(mp3);
+            });
+        }
+    }
+}
+// const mp3 = document.getElementById('mp3') || document.getElementById('jingle');
+const mp3 = document.querySelectorAll('#body audio');
+const analyzer = new Analyzer(mp3);
+analyzer.init();
