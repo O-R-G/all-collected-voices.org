@@ -10,6 +10,7 @@ class Analyzer {
             console.log('mp3 is not found');
             return;
         }
+        console.log(mp3);
         this.mp3 = mp3;
         this.audios = [];
         for(const m of this.mp3) {
@@ -44,6 +45,8 @@ class Analyzer {
         this.FF = 2048 / 4; // frequency resolution
         this.debug = false;
         this.ios = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        this.timer = null;
+        this.init();
     }
 
     init() {
@@ -64,6 +67,7 @@ class Analyzer {
 
     startWebaudio() {
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        console.log(this.audios);
         for(const data of this.audios) {
             const ctx = new AudioContext();
             console.log(data);
@@ -106,15 +110,26 @@ class Analyzer {
             this.currentMp3.pause();
             this.updateCurrentMp3(mp3); 
         }
+        
         await this.audios[this.currentIdx].ctx.resume();
         this.currentMp3.play();
+        // this.animate();
         this.playing = true;
+        
     }
 
     handlePause(mp3) {
+        console.log('pause');
         if (!this.playing) return;
         mp3.pause();
+        // cancelAnimationFrame(this.animation);
+        // this.animation = null;
         this.playing = false;
+        // setTimeout(()=>{
+        //     this.animate('', true);
+        // }, 100);
+        
+        
     }
 
     start() {
@@ -148,7 +163,6 @@ class Analyzer {
     }
 
     animate() {
-        console.log('a', this.currentIdx);
         var a = new Uint8Array(this.audios[this.currentIdx].analyser.frequencyBinCount);
         var y = new Uint8Array(this.audios[this.currentIdx].analyser.frequencyBinCount);
         var b, c, d;
@@ -240,6 +254,6 @@ class Analyzer {
     }
 }
 // const mp3 = document.getElementById('mp3') || document.getElementById('jingle');
-const mp3 = document.querySelectorAll('#body audio');
+const mp3 = document.querySelectorAll('#page audio');
 const analyzer = new Analyzer(mp3);
-analyzer.init();
+// analyzer.init();
