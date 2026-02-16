@@ -101,13 +101,10 @@ class Analyzer {
     }
 
     async handlePlay(mp3) {
-        // console.log('handlePlay0');
-        // console.log(audio === this.currentMp3);
         if (this.playing && mp3 === this.currentMp3) return;
         if(mp3 !== this.currentMp3) {
+            this.currentMp3.pause();
             this.updateCurrentMp3(mp3); 
-            // this.currentMp3 = mp3;
-            // this.setAudio();
         }
         await this.audios[this.currentIdx].ctx.resume();
         this.currentMp3.play();
@@ -151,6 +148,7 @@ class Analyzer {
     }
 
     animate() {
+        console.log('a', this.currentIdx);
         var a = new Uint8Array(this.audios[this.currentIdx].analyser.frequencyBinCount);
         var y = new Uint8Array(this.audios[this.currentIdx].analyser.frequencyBinCount);
         var b, c, d;
